@@ -1,0 +1,131 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class currency {
+	
+	private JFrame frame;
+	private JPanel panel;
+	private JTextField textField;
+	private JLabel USDLabel;
+	private JComboBox combo;
+	private JLabel outputLabel;
+	private JButton calculate;
+	private JButton clear;
+	private JButton exit;
+	
+	public currency() {
+		gui();
+	}
+	
+	public void gui() {
+		
+		frame = new JFrame("Currency Conversion Program");
+		frame.setVisible(true);
+		frame.setSize(400, 400);
+		
+		panel = new JPanel(new GridBagLayout());
+		
+		textField = new JTextField("00");
+		textField.setColumns(7);
+		
+		USDLabel = new JLabel("USD");
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		String[] currencies = {"Pound", "Franc", "Lire", "Mark", "Pesetas"};
+		
+		combo = new JComboBox(currencies);
+		
+		outputLabel = new JLabel("Output");
+		
+		calculate = new JButton("Calculate");
+		calculate.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				String s = textField.getText();
+				double num = Double.parseDouble(s);
+				
+				String type = (String)combo.getSelectedItem();
+				
+				if (type.equals("Pound")) {
+					num = num * 0.64;
+				}
+				else if (type.equals("Franc")) {
+					num = num * 6.07426;
+				}
+				else if (type.equals("Lire")) {
+					num = num * 1793.62;
+				}
+				else if (type.equals("Mark")) {
+					num = num * 1.811;
+				}
+				else if (type.equals("Pesetas")) {
+					num = num * 154.076;
+				}
+				
+				outputLabel.setText(Double.toString(num));
+			}
+		});
+		
+		clear = new JButton("Clear");
+		clear.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				outputLabel.setText("0.0");
+			}
+		});
+		
+		exit = new JButton("Exit");
+		exit.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		
+		panel.add(textField,c);
+		
+		c.gridx = 1;
+		c.gridy = 1;
+		
+		panel.add(USDLabel,c);
+		
+		c.gridx = 0;
+		c.gridy = 2;
+		
+		panel.add(combo,c);
+		
+		c.gridx = 1;
+		c.gridy = 2;
+		
+		panel.add(outputLabel,c);
+		
+		c.gridx = 0;
+		c.gridy = 3;
+		
+		panel.add(calculate,c);
+
+		c.gridx = 1;
+		c.gridy = 3;
+		
+		panel.add(clear,c);
+
+		c.gridx = 2;
+		c.gridy = 3;
+		
+		panel.add(exit,c);
+		
+		frame.add(panel);
+	}
+
+	public static void main(String[] args) {
+		
+		new currency();
+	}
+}
